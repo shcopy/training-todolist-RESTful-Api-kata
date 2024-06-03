@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <input type="text" class="txt" placeholder="請輸入待辦事項">
+    <input type="button" class="save" value="儲存待辦">
+    <ul class="list"></ul>
+
+    <script>
+        const txt = document.querySelector('.txt');
+        const save = document.querySelector('.save');
+        const list = document.querySelector('.list');
+
+        let data = [];
+        // 畫面渲染
+        function renderData() {
+            let str = '';
+            data.forEach(function (item, index) {
+                str += `<li>${item.content} <input class="delete" type="button" data-num="${index}" value="刪除待辦"></li>`
+            })
+            list.innerHTML = str;
+        }
+
+        // 新增待辦功能
+        save.addEventListener('click', function (e) {
+            if (txt.value == "") {
+                alert("請輸入內容");
+                return;
+            }
+            let obj = {};
+            obj.content = txt.value
+            data.push(obj);
+            renderData();
+        })
+
+        // 刪除待辦功能
+        list.addEventListener("click", function (e) {
+            if (e.target.getAttribute("class") !== "delete") {
+                return;
+            }
+            let num = e.target.getAttribute("data-num");
+            console.log(num);
+            data.splice(num, 1);
+            alert("刪除成功！");
+            renderData();
+        })
+    </script>
+</body>
+
+</html>
